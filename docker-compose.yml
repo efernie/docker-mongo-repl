@@ -1,0 +1,48 @@
+version: '3'
+services:
+  mongodata1:
+    image: mongo:3.2.9
+    volumes:
+      - /data/db
+    command: echo 'Data Container for Mongo mongo1'
+
+  mongo1:
+    image: mongo:3.2.9
+    ports:
+      - "30001:27017"
+    volumes:
+      - mongodata1:/data/db:rw
+    command: mongod --replSet my-mongo-set
+
+  mongodata2:
+    image: mongo:3.2.9
+    volumes:
+      - /data/db
+    command: echo 'Data Container for Mongo mongo2'
+
+  mongo2:
+    image: mongo:3.2.9
+    ports:
+      - "30002:27017"
+    volumes:
+      - mongodata2:/data/db:rw
+    command: mongod --replSet my-mongo-set
+
+  mongodata3:
+    image: mongo:3.2.9
+    volumes:
+      - /data/db
+    command: echo 'Data Container for Mongo mongo3'
+
+  mongo3:
+    image: mongo:3.2.9
+    ports:
+      - "30003:27017"
+    volumes:
+      - mongodata3:/data/db:rw
+    command: mongod --replSet my-mongo-set
+
+volumes:
+    mongodata1:
+    mongodata2:
+    mongodata3:
